@@ -1,0 +1,61 @@
+@page
+@model Store.Pages.Accounts.IndexModel
+@{  
+    ViewData["Title"]="Account";
+}
+<h1>Manage accounts</h1>
+
+<p>
+    <a asp-page="./Create">Create new account</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+             <th>
+                @Html.DisplayNameFor(model => model.AccountIndexVm.Accounts[0].username)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AccountIndexVm.Accounts[0].password)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AccountIndexVm.Accounts[0].permission)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.AccountIndexVm.Accounts) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.username)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.password)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.permission)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.id">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.id">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+@{
+    var preDisabled = !Model.AccountIndexVm.Accounts.HasPrevious ? "disabled" : "";
+    var nextDisabled = !Model.AccountIndexVm.Accounts.HasNext ? "disabled" : "";
+}
+<div class="container">
+    <a  asp-page="Index" 
+        asp-route-pageIndex="@(Model.AccountIndexVm.Accounts.PageIndex - 1)" 
+        class="btn btn-default @preDisabled" >Previous</a>
+
+    <a  asp-page="Index" 
+        asp-route-pageIndex="@(Model.AccountIndexVm.Accounts.PageIndex + 1)" 
+        class="btn btn-default @nextDisabled" >Next</a>
+</div>

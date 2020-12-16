@@ -1,0 +1,89 @@
+@page
+@model Store.Pages.Invoices.IndexModel
+@{  
+    ViewData["Title"]="Invoice";
+}
+<h1>Manage invoices</h1>
+
+<p>
+    <a asp-page="./Create">Create new invoice</a>
+</p>
+<form>
+    <p>
+        Staff:
+        <select asp-for="staff" asp-items="Model.InvoiceIndexVm.Staff">
+            <option value="">All</option>
+        </select>
+        Supplier:
+        <select asp-for="supplier" asp-items="Model.InvoiceIndexVm.Supplier">
+            <option value="">All</option>
+        </select>
+        Cost:<input style="width:100px" asp-for="costFrom" >to<input  style="width:100px"  asp-for="costTo" />
+        <input type="submit" value="Filter">
+        <a asp-action="Back" >Back to full list</a>
+    </p>
+    
+</form>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.InvoiceIndexVm.Invoices[0].id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.InvoiceIndexVm.Invoices[0].Staff)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.InvoiceIndexVm.Invoices[0].Supplier)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.InvoiceIndexVm.Invoices[0].ImportDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.InvoiceIndexVm.Invoices[0].Cost)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.InvoiceIndexVm.Invoices) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Staff)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Supplier)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ImportDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cost)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.id">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.id">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.id">Delete</a> | 
+                <a asp-page="../DetailInvoices/Index" asp-route-invoiceId="@item.id">Add details</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+@{
+    var preDisabled = !Model.InvoiceIndexVm.Invoices.HasPrevious ? "disabled" : "";
+    var nextDisabled = !Model.InvoiceIndexVm.Invoices.HasNext ? "disabled" : "";
+}
+<div class="container">
+    <a  asp-page="Index" 
+        asp-route-pageIndex="@(Model.InvoiceIndexVm.Invoices.PageIndex - 1)" 
+        class="btn btn-default @preDisabled" asp-route-staff="@Model.staff" asp-route-supplier="@Model.supplier" asp-route-costFrom="@Model.costFrom" asp-route-costTo="@Model.costTo">Previous</a>
+
+    <a  asp-page="Index" 
+        asp-route-pageIndex="@(Model.InvoiceIndexVm.Invoices.PageIndex + 1)" 
+        class="btn btn-default @nextDisabled" asp-route-staff="@Model.staff" asp-route-supplier="@Model.supplier" asp-route-costFrom="@Model.costFrom" asp-route-costTo="@Model.costTo">Next</a>
+</div>

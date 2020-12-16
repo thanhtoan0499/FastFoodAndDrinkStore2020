@@ -1,0 +1,53 @@
+@page
+@model Store.Pages.Promotions.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Promotion</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Promotion.id" />
+            <div class="form-group">
+                <label asp-for="Promotion.Name" class="control-label"></label>
+                <input asp-for="Promotion.Name" class="form-control" />
+                <span asp-validation-for="Promotion.Name" class="text-danger"></span>
+                <span class="text-danger">
+                    @Html.DisplayFor(model => model.ValidForCodeName)
+                </span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Promotion.Discount" class="control-label"></label>
+                <input asp-for="Promotion.Discount" class="form-control" />
+                <span asp-validation-for="Promotion.Discount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Promotion.Start" class="control-label"></label>
+                <input asp-for="Promotion.Start" class="form-control" />
+                <span asp-validation-for="Promotion.Start" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Promotion.End" class="control-label"></label>
+                <input asp-for="Promotion.End" class="form-control" />
+                <span asp-validation-for="Promotion.End" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

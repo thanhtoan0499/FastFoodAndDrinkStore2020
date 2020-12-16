@@ -1,0 +1,92 @@
+@page
+@model Store.Pages.Receipts.IndexModel
+@{  
+    ViewData["Title"]="Receipt";
+}
+<h1>Manage Receipts</h1>
+
+<p>
+    <a asp-page="./Create">Create new receipt</a>
+</p>
+<form>
+    <p>
+        Code:
+        <input asp-for="receiptID" style="width:100px">
+        Staff:
+        <select asp-for="staff" asp-items="Model.ReceiptIndexVm.Staff">
+            <option value="0">All</option>
+        </select>
+        Customer:
+        <select asp-for="customer" asp-items="Model.ReceiptIndexVm.Customer">
+            <option value="0">All</option>
+        </select>
+        Time:<input  style="width:150px"  asp-for="start" >to<input  style="width:150px"  asp-for="end"/>
+        Cost:<input style="width:100px" asp-for="costFrom" >to<input  style="width:100px"  asp-for="costTo" />
+        <input type="submit" value="Filter">
+        <a asp-action="Back" >Back to full list</a>
+    </p>
+    
+</form>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ReceiptIndexVm.Receipts[0].id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ReceiptIndexVm.Receipts[0].StaffID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ReceiptIndexVm.Receipts[0].CustomerID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ReceiptIndexVm.Receipts[0].ExportDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ReceiptIndexVm.Receipts[0].TotalCost)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.ReceiptIndexVm.Receipts) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StaffID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CustomerID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ExportDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TotalCost)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.id">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.id">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.id">Delete</a> | 
+                <a asp-page="../DetailReceipts/Index" asp-route-ReceiptId="@item.id">Add details</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+@{
+    var preDisabled = !Model.ReceiptIndexVm.Receipts.HasPrevious ? "disabled" : "";
+    var nextDisabled = !Model.ReceiptIndexVm.Receipts.HasNext ? "disabled" : "";
+}
+<div class="container">
+    <a  asp-page="Index" 
+        asp-route-pageIndex="@(Model.ReceiptIndexVm.Receipts.PageIndex - 1)" 
+        class="btn btn-default @preDisabled" asp-route-staff="@Model.staff" asp-route-customer="@Model.customer" asp-route-costFrom="@Model.costFrom" asp-route-costTo="@Model.costTo" asp-route-start="start" asp-route-end="end">Previous</a>
+
+    <a  asp-page="Index" 
+        asp-route-pageIndex="@(Model.ReceiptIndexVm.Receipts.PageIndex + 1)" 
+        class="btn btn-default @nextDisabled" asp-route-staff="@Model.staff" asp-route-customer="@Model.customer" asp-route-costFrom="@Model.costFrom" asp-route-costTo="@Model.costTo" asp-route-start="start" asp-route-end="end">Next</a>
+</div>

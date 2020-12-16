@@ -1,0 +1,106 @@
+@page
+@model Store.Pages.DetailInvoices.IndexModel
+@{  
+    ViewData["Title"]="DetailInvoice";
+}
+<h1>Manage detail invoice</h1>
+
+<p>
+    <a asp-page="./Create" asp-route-invoiceId="@Model.invoiceId">Create new detail invoice</a>
+</p>
+<form>
+    <p>
+        Invoice code:
+        <select asp-for="invoiceId" asp-items="Model.DetailInvoiceIndexVm.Invoices">
+            <option value="0">All</option>
+        </select>
+        Product name:
+        <select asp-for="productName" asp-items="Model.DetailInvoiceIndexVm.Products">
+            <option value="">All</option>
+        </select>
+        Quantity:<input  style="width:50px"  asp-for="quantityFrom" > - <input  style="width:50px"  asp-for="quantityTo"/>
+        Total cost:<input style="width:100px" asp-for="costFrom" > - <input  style="width:100px"  asp-for="costTo" />
+        <input type="submit" value="Filter">
+        <a asp-action="Back" >Back to full list</a>
+    </p>
+</form>
+<p>
+    Invoice Code:
+    <input style="width:50px" asp-for="DetailInvoiceIndexVm.Invoice.id"  disabled>
+    Staff:
+    <input asp-for="DetailInvoiceIndexVm.Invoice.Staff"  disabled>
+    Supplier:
+    <input style="width:100px" asp-for="DetailInvoiceIndexVm.Invoice.Supplier"  disabled>
+    Import Date:
+    <input style="width:150px" asp-for="DetailInvoiceIndexVm.Invoice.ImportDate"  disabled>
+    Total cost:
+    <input asp-for="DetailInvoiceIndexVm.Invoice.Cost"  disabled>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.DetailInvoiceIndexVm.DetailInvoices[0].InvoiceId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DetailInvoiceIndexVm.DetailInvoices[0].ProductName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DetailInvoiceIndexVm.DetailInvoices[0].ProductId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DetailInvoiceIndexVm.DetailInvoices[0].Price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DetailInvoiceIndexVm.DetailInvoices[0].Quantity)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DetailInvoiceIndexVm.DetailInvoices[0].TotalCost)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.DetailInvoiceIndexVm.DetailInvoices) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.InvoiceId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProductName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProductId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Quantity)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TotalCost)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-invoiceId="@Model.invoiceId" asp-route-id="@item.id">Edit</a> |
+                <a asp-page="./Details" asp-route-invoiceId="@Model.invoiceId" asp-route-id="@item.id">Details</a> |
+                <a asp-page="./Delete" asp-route-invoiceId="@Model.invoiceId" asp-route-id="@item.id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+@{
+    var preDisabled = !Model.DetailInvoiceIndexVm.DetailInvoices.HasPrevious ? "disabled" : "";
+    var nextDisabled = !Model.DetailInvoiceIndexVm.DetailInvoices.HasNext ? "disabled" : "";
+}
+<div class="container">
+    <a  asp-page="Index" 
+        asp-route-pageIndex="@(Model.DetailInvoiceIndexVm.DetailInvoices.PageIndex - 1)" 
+        class="btn btn-default @preDisabled" asp-route-invoiceId="@Model.invoiceId" asp-route-productName="@Model.productName" asp-route-quantityFrom="@Model.quantityFrom" asp-route-quantityTo="@Model.quantityTo" asp-route-costFrom="@Model.costFrom" asp-route-costTo="@Model.costTo">Previous</a>
+
+    <a  asp-page="Index" 
+        asp-route-pageIndex="@(Model.DetailInvoiceIndexVm.DetailInvoices.PageIndex + 1)" 
+        class="btn btn-default @nextDisabled" asp-route-invoiceId="@Model.invoiceId" asp-route-productName="@Model.productName" asp-route-quantityFrom="@Model.quantityFrom" asp-route-quantityTo="@Model.quantityTo" asp-route-costFrom="@Model.costFrom" asp-route-costTo="@Model.costTo">Next</a>
+</div>

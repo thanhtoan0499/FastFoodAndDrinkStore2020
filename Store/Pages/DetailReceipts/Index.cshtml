@@ -1,0 +1,94 @@
+@page
+@model Store.Pages.DetailReceipts.IndexModel
+@{  
+    ViewData["Title"]="DetailReceipt";
+}
+<h1>Manage detail receipt</h1>
+
+<p>
+    <a asp-page="./Create" asp-route-receiptID="@Model.receiptID">Create new detail receipt</a>
+</p>
+<form>
+    <p>
+        Receipt code:
+        <select asp-for="receiptID" asp-items="Model.DetailReceiptIndexVm.Receipts">
+            <option value="0">All</option>
+        </select>
+        Product Code:
+        <select asp-for="product" asp-items="Model.DetailReceiptIndexVm.Products">
+            <option value="0">All</option>
+        </select>
+        Quantity:<input  style="width:50px"  asp-for="quantityFrom" > - <input  style="width:50px"  asp-for="quantityTo"/>
+        Cost:<input style="width:100px" asp-for="costFrom" > - <input  style="width:100px"  asp-for="costTo" />
+        <input type="submit" value="Filter">
+        <a asp-action="Back" >Back to full list</a>
+    </p>
+</form>
+<p>
+    Receipt Code:
+    <input style="width:50px" asp-for="DetailReceiptIndexVm.Receipt.id"  disabled>
+    Staff:
+    <input asp-for="DetailReceiptIndexVm.Receipt.StaffID"  disabled>
+    Customer:
+    <input style="width:100px" asp-for="DetailReceiptIndexVm.Receipt.CustomerID"  disabled>
+    Export Date:
+    <input style="width:150px" asp-for="DetailReceiptIndexVm.Receipt.ExportDate"  disabled>
+    Total cost:
+    <input asp-for="DetailReceiptIndexVm.Receipt.TotalCost"  disabled>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.DetailReceiptIndexVm.DetailReceipts[0].ReceiptID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DetailReceiptIndexVm.DetailReceipts[0].ProductID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DetailReceiptIndexVm.DetailReceipts[0].Quantity)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DetailReceiptIndexVm.DetailReceipts[0].Cost)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.DetailReceiptIndexVm.DetailReceipts) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ReceiptID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProductID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Quantity)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cost)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-receiptID="@Model.receiptID" asp-route-id="@item.id">Edit</a> |
+                <a asp-page="./Details" asp-route-receiptID="@Model.receiptID" asp-route-id="@item.id">Details</a> |
+                <a asp-page="./Delete" asp-route-receiptID="@Model.receiptID" asp-route-id="@item.id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+@{
+    var preDisabled = !Model.DetailReceiptIndexVm.DetailReceipts.HasPrevious ? "disabled" : "";
+    var nextDisabled = !Model.DetailReceiptIndexVm.DetailReceipts.HasNext ? "disabled" : "";
+}
+<div class="container">
+    <a  asp-page="Index" 
+        asp-route-pageIndex="@(Model.DetailReceiptIndexVm.DetailReceipts.PageIndex - 1)" 
+        class="btn btn-default @preDisabled" asp-route-receiptID="@Model.receiptID" asp-route-productName="@Model.product" asp-route-quantityFrom="@Model.quantityFrom" asp-route-quantityTo="@Model.quantityTo" asp-route-costFrom="@Model.costFrom" asp-route-costTo="@Model.costTo">Previous</a>
+
+    <a  asp-page="Index" 
+        asp-route-pageIndex="@(Model.DetailReceiptIndexVm.DetailReceipts.PageIndex + 1)" 
+        class="btn btn-default @nextDisabled" asp-route-receiptID="@Model.receiptID" asp-route-productName="@Model.product" asp-route-quantityFrom="@Model.quantityFrom" asp-route-quantityTo="@Model.quantityTo" asp-route-costFrom="@Model.costFrom" asp-route-costTo="@Model.costTo">Next</a>
+</div>

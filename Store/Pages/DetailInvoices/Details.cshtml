@@ -1,0 +1,55 @@
+@page
+@model Store.Pages.DetailInvoices.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>DetailInvoice</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DetailInvoice.InvoiceId)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DetailInvoice.InvoiceId)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DetailInvoice.ProductName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DetailInvoice.ProductName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DetailInvoice.ProductId)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DetailInvoice.ProductId)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DetailInvoice.Price)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DetailInvoice.Price)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DetailInvoice.Quantity)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DetailInvoice.Quantity)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DetailInvoice.TotalCost)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DetailInvoice.TotalCost)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.DetailInvoice.id" asp-route-invoiceId="@Model.DetailInvoice.InvoiceId">Edit</a> |
+    <a asp-page="./Index" asp-route-invoiceId="@Model.DetailInvoice.InvoiceId">Back to List</a>
+</div>

@@ -1,0 +1,43 @@
+@page
+@model Store.Pages.DetailReceipts.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>DetailReceipt</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DetailReceipt.ReceiptID)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DetailReceipt.ReceiptID)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DetailReceipt.ProductID)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DetailReceipt.ProductID)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DetailReceipt.Quantity)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DetailReceipt.Quantity)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DetailReceipt.Cost)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DetailReceipt.Cost)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.DetailReceipt.id" asp-route-receiptID="@Model.DetailReceipt.ReceiptID">Edit</a> |
+    <a asp-page="./Index" asp-route-receiptID="@Model.DetailReceipt.ReceiptID">Back to List</a>
+</div>

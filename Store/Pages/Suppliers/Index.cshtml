@@ -1,0 +1,76 @@
+@page
+@model Store.Pages.Suppliers.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Manage suppliers</h1>
+
+<p>
+    <a asp-page="Create">Create new supplier</a>
+</p>
+<form>
+    <p>
+        ID:
+        <input asp-for="id">
+        Name:
+        <input asp-for="name">
+        <input type="submit" value="Filter">
+        <a asp-action="Back" >Back to full list</a>
+    </p>
+    
+</form>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.SupplierIndexVm.Suppliers[0].id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SupplierIndexVm.Suppliers[0].Name)
+            </th>
+        
+            <th>
+                @Html.DisplayNameFor(model => model.SupplierIndexVm.Suppliers[0].Address)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.SupplierIndexVm.Suppliers) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+        
+            <td>
+                @Html.DisplayFor(modelItem => item.Address)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.id">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.id">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+
+@{
+    var preDisabled = !Model.SupplierIndexVm.Suppliers.HasPrevious ? "disabled" : "";
+    var nextDisabled = !Model.SupplierIndexVm.Suppliers.HasNext ? "disabled" : "";
+}
+<div class="container">
+    <a  asp-page="Index" 
+        asp-route-pageIndex="@(Model.SupplierIndexVm.Suppliers.PageIndex - 1)" 
+        class="btn btn-default @preDisabled" asp-route-name="@Model.name" >Previous</a>
+
+    <a  asp-page="Index" 
+        asp-route-pageIndex="@(Model.SupplierIndexVm.Suppliers.PageIndex + 1)" 
+        class="btn btn-default @nextDisabled"  asp-route-name="@Model.name" >Next</a>
+</div>

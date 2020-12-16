@@ -1,0 +1,111 @@
+@page
+@model Store.Pages.Staffs.IndexModel
+@{  
+    ViewData["Title"]="Staff";
+}
+<h1>Manage staffs</h1>
+
+<p>
+    <a asp-page="./Create">Create new staff</a>
+</p>
+<form method="get">
+        <p>
+            ID:
+            <input asp-for="code" style="width:50px">
+            Last Name:<input type="text" asp-for="lastName">
+            First Name:<input type="text" asp-for="firstName" style="width:100px">
+            Gender:
+            <select asp-for="gender">
+                <option value="">All</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+            </select>
+            Position:
+            <select asp-for="position" asp-items="Model.StaffIndexVm.Positions">
+                <option value="">All</option>
+            </select>
+            
+            <input type="submit" value="Filter">
+            <a asp-action="Back" >Back to full list</a>
+        </p> 
+</form>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.StaffIndexVm.Staffs[0].id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StaffIndexVm.Staffs[0].LastName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StaffIndexVm.Staffs[0].FirstName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StaffIndexVm.Staffs[0].Dob)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StaffIndexVm.Staffs[0].Gender)
+            </th>
+            <!-- <th>
+                @Html.DisplayNameFor(model => model.StaffIndexVm.Staffs[0].Address)
+            </th> -->
+            <th>
+                @Html.DisplayNameFor(model => model.StaffIndexVm.Staffs[0].Position)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StaffIndexVm.Staffs[0].SalaryRate)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.StaffIndexVm.Staffs) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Dob)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Gender)
+            </td>
+            <!-- <td>
+                @Html.DisplayFor(modelItem => item.Address)
+            </td> -->
+             <td>
+                @Html.DisplayFor(modelItem => item.Position)
+            </td>
+             <td>
+                @Html.DisplayFor(modelItem => item.SalaryRate)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.id">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.id">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+@{
+    var preDisabled = !Model.StaffIndexVm.Staffs.HasPrevious ? "disabled" : "";
+    var nextDisabled = !Model.StaffIndexVm.Staffs.HasNext ? "disabled" : "";
+}
+<div class="container">
+    <a  asp-page="Index" 
+        asp-route-pageIndex="@(Model.StaffIndexVm.Staffs.PageIndex - 1)" 
+        class="btn btn-default @preDisabled" asp-route-lastName="@Model.lastName" asp-route-firstName="@Model.firstName" asp-route-gender="@Model.gender" asp-route-position="@Model.position">Previous</a>
+
+    <a  asp-page="Index" 
+        asp-route-pageIndex="@(Model.StaffIndexVm.Staffs.PageIndex + 1)" 
+        class="btn btn-default @nextDisabled" asp-route-lastName="@Model.lastName" asp-route-firstName="@Model.firstName" asp-route-gender="@Model.gender" asp-route-position="@Model.position">Next</a>
+</div>

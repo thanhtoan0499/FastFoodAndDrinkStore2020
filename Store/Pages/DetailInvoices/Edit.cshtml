@@ -1,0 +1,65 @@
+@page
+@model Store.Pages.DetailInvoices.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>DetailInvoice</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="DetailInvoice.id" />
+            <div class="form-group">
+                <label asp-for="DetailInvoice.InvoiceId" class="control-label"></label>
+                <!-- <input asp-for="DetailInvoice.InvoiceId" class="form-control" /> -->
+                <select asp-for="DetailInvoice.InvoiceId" asp-items="@Model.Invoices" class="form-control">
+                </select>
+                <span asp-validation-for="DetailInvoice.InvoiceId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DetailInvoice.ProductName" class="control-label"></label>
+                <!-- <input asp-for="DetailInvoice.ProductName" class="form-control" /> -->
+                <select asp-for="DetailInvoice.ProductName" asp-items="@Model.Products" class="form-control" > 
+                </select>
+                <span asp-validation-for="DetailInvoice.ProductName" class="text-danger"></span>
+            </div>
+            <!-- <div class="form-group">
+                <label asp-for="DetailInvoice.ProductId" class="control-label"></label>
+                <input asp-for="DetailInvoice.ProductId" class="form-control" disabled/>
+                <span asp-validation-for="DetailInvoice.ProductId" class="text-danger"></span>
+            </div>
+            
+            <div class="form-group">
+                <label asp-for="DetailInvoice.Price" class="control-label"></label>
+                <input asp-for="DetailInvoice.Price" class="form-control" disabled/>
+                <span asp-validation-for="DetailInvoice.Price" class="text-danger"></span>
+            </div> -->
+            <div class="form-group">
+                <label asp-for="DetailInvoice.Quantity" class="control-label"></label>
+                <input asp-for="DetailInvoice.Quantity" class="form-control" />
+                <span asp-validation-for="DetailInvoice.Quantity" class="text-danger"></span>
+            </div>
+            <!-- <div class="form-group">
+                <label asp-for="DetailInvoice.TotalCost" class="control-label"></label>
+                <input asp-for="DetailInvoice.TotalCost" class="form-control" disabled/>
+                <span asp-validation-for="DetailInvoice.TotalCost" class="text-danger"></span>
+            </div> -->
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index" asp-route-invoiceId="@Model.DetailInvoice.InvoiceId">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

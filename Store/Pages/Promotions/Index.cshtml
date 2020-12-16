@@ -1,0 +1,77 @@
+@page
+@model Store.Pages.Promotions.IndexModel
+@{  
+    ViewData["Title"]="Promotion";
+}
+<h1>Manage promotions</h1>
+
+<p>
+    <a asp-page="./Create">Create new promotion</a>
+</p>
+<form>
+    <p>
+        Code:
+        <input type="text" asp-for="name" style="width:100px">
+        Discount:<input style="width:100px" asp-for="discountFrom" >to<input  style="width:100px"  asp-for="discountTo" />
+        Time:<input  style="width:150px"  asp-for="start" >to<input  style="width:150px"  asp-for="end"/>
+        <input type="submit" value="Filter">
+        <a asp-action="Back" >Back to full list</a>
+    </p>
+    
+</form>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.PromotionIndexVm.Promotions[0].Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PromotionIndexVm.Promotions[0].Discount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PromotionIndexVm.Promotions[0].Start)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PromotionIndexVm.Promotions[0].End)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.PromotionIndexVm.Promotions) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Discount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Start)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.End)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.id">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.id">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+@{
+    var preDisabled = !Model.PromotionIndexVm.Promotions.HasPrevious ? "disabled" : "";
+    var nextDisabled = !Model.PromotionIndexVm.Promotions.HasNext ? "disabled" : "";
+}
+<div class="container">
+    <a  asp-page="Index" 
+        asp-route-pageIndex="@(Model.PromotionIndexVm.Promotions.PageIndex - 1)" 
+        class="btn btn-default @preDisabled" asp-route-name="@Model.name" asp-route-discountFrom="@Model.discountFrom" asp-route-discountTo="@Model.discountTo" asp-route-start="@Model.start" asp-route-end="@Model.end" >Previous</a>
+
+    <a  asp-page="Index" 
+        asp-route-pageIndex="@(Model.PromotionIndexVm.Promotions.PageIndex + 1)" 
+        class="btn btn-default @nextDisabled" asp-route-name="@Model.name" asp-route-discountFrom="@Model.discountFrom" asp-route-discountTo="@Model.discountTo" asp-route-start="@Model.start" asp-route-end="@Model.end">Next</a>
+</div>
